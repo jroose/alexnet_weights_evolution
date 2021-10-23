@@ -22,7 +22,7 @@ from tensorflow.keras.initializers import random_uniform, glorot_uniform, consta
 
 def create_alexnet():
     # input layer: size (224, 224, 3)
-    X = input(X_input)
+    X = Input(shape=(224, 224, 3))
 
     # Five convolutional layers and  #two Max pooling layer, parallel:.  Followed by Relu? padding???
 
@@ -54,13 +54,14 @@ def create_alexnet():
     X = Dense(4096, activation='relu', kernel_initializer=glorot_uniform())(X)
     X = Dense(1000, activation='softmax', kernel_initializer=glorot_uniform())(X)
 
+    return X
+
 
 if __name__ == '__main__':
     #import the photos from external library
     #X_input
 
     #preprocess the photos and data augmentation
-
 
     #define layers of network
 
