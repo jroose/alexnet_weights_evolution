@@ -20,6 +20,41 @@ from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.initializers import random_uniform, glorot_uniform, constant, identity
 
+def create_alexnet():
+    # input layer: size (224, 224, 3)
+    X = input(X_input)
+
+    # Five convolutional layers and  #two Max pooling layer, parallel:.  Followed by Relu? padding???
+
+    # First CL: 96 kernels of size (11, 11, 3), stride 4
+    X = Conv2D(filters=96, kernel_size=(11, 11), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    X = Activation('relu')(X)
+    X = MaxPooling2D((3, 3), strides=(2, 2))(X)
+
+    # Second CL: 256 kernels of size (5, 5, 48), stride
+    X = Conv2D(filters=256, kernel_size=(5, 5), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    X = Activation('relu')(X)
+    X = MaxPooling2D((3, 3), strides=(2, 2))(X)
+
+    # Third CL: 384 kernels of size (3, 3, 256), stride
+    X = Conv2D(filters=384, kernel_size=(3, 3), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    X = Activation('relu')(X)
+
+    # Forth CL: 384 kernels of size (3, 3, 192), stride
+    X = Conv2D(filters=384, kernel_size=(3, 3), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    X = Activation('relu')(X)
+
+    # Fifth CL: 256 kernels of size (3, 3, 192), stride
+    X = Conv2D(filters=256, kernel_size=(3, 3), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    X = Activation('relu')(X)
+    X = MaxPooling2D((3, 3), strides=(2, 2))(X)
+
+    # Three fully connected layers with 4096 neurons
+    X = Dense(4096, activation='relu', kernel_initializer=glorot_uniform())(X)
+    X = Dense(4096, activation='relu', kernel_initializer=glorot_uniform())(X)
+    X = Dense(1000, activation='softmax', kernel_initializer=glorot_uniform())(X)
+
+
 if __name__ == '__main__':
     #import the photos from external library
     #X_input
@@ -29,39 +64,7 @@ if __name__ == '__main__':
 
     #define layers of network
 
-    #input layer: size (224, 224, 3)
-    X = input(X_input)
-
-    #Five convolutional layers and  #two Max pooling layer, parallel:.  Followed by Relu? padding???
-
-    #First CL: 96 kernels of size (11, 11, 3), stride 4
-    X = Conv2D(filters = 96, kernel_size = (11, 11), strides = (4,4), padding = 'same', kernel_initializer = random_uniform())(X)
-    X = Activation('relu')(X)
-    X = MaxPooling2D((3, 3), strides=(2, 2))(X)
-
-    #Second CL: 256 kernels of size (5, 5, 48), stride
-    X = Conv2D(filters = 256, kernel_size = (5, 5), strides = (4,4), padding = 'same', kernel_initializer = random_uniform())(X)
-    X = Activation('relu')(X)
-    X = MaxPooling2D((3, 3), strides=(2, 2))(X)
-
-    #Third CL: 384 kernels of size (3, 3, 256), stride
-    X = Conv2D(filters = 384, kernel_size = (3, 3), strides = (4,4), padding = 'same', kernel_initializer = random_uniform())(X)
-    X = Activation('relu')(X)
-
-    #Forth CL: 384 kernels of size (3, 3, 192), stride
-    X = Conv2D(filters = 384, kernel_size = (3, 3), strides = (4,4), padding = 'same', kernel_initializer = random_uniform())(X)
-    X = Activation('relu')(X)
-
-    #Fifth CL: 256 kernels of size (3, 3, 192), stride
-    X = Conv2D(filters = 256, kernel_size = (3, 3), strides = (4,4), padding = 'same', kernel_initializer = random_uniform())(X)
-    X = Activation('relu')(X)
-    X = MaxPooling2D((3, 3), strides=(2, 2))(X)
-
-    #Three fully connected layers with 4096 neurons
-    X = Dense(4096, activation='relu', kernel_initializer = glorot_uniform())(X)
-    X = Dense(4096, activation='relu', kernel_initializer = glorot_uniform())(X)
-    X = Dense(1000, activation='softmax', kernel_initializer = glorot_uniform())(X)
-
+    X = create_alexnet()
     model = Model(inputs=X_input, outputs=X)
 
     #Train model, classify images
