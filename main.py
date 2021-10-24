@@ -1,5 +1,6 @@
 from alexnet import create_alexnet
-from tensorflow.data.Dataset import load, from_generator
+import tensorflow
+import tensorflow.data
 from data import data_generator
 import sys
 
