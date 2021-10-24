@@ -1,6 +1,7 @@
 from alexnet import create_alexnet
 from tensorflow.data.Dataset import load, from_generator
-
+from data import data_generator
+import sys
 
 #courtesy of Angel Igareta
 #https://towardsdatascience.com/how-to-split-a-tensorflow-dataset-into-train-validation-and-test-sets-526c8dd29438
@@ -22,21 +23,19 @@ def get_dataset_partitions_tf(ds, ds_size, train_split=0.8, val_split=0.1, test_
     return train_ds, val_ds, test_ds
 
 if __name__ == '__main__':
-    # import the photos from external library
-    # X_input
+    #getting command line args
+    traindir = sys.argv[1]
+    validdir = sys.argv[2]
+    testdir = sys.argv[3]
 
-    # preprocess the photos and data augmentation
+    model = create_alexnet()
 
-    # define layers of network
+    for it_epoch in range(30):
+        for X_train, Y_train in data_generator(traindir, 128):
+            acc, mse = model.train_on_batch(X_train, Y_train)
+            print("Epoch Number:", it_epoch, "Accuracy:", acc, "Mean Square Error:", mse)
 
-    X = [] #list of strings
-    Y = [] #list of ints, identifying class of image
-    #Train, Validation, Test
 
-    X_Train,  X_Valid, X_Test =
-    Y_Train, Y_Valid,  Y_Test =
 
-    X = create_alexnet()
-    X.fit(X_Train, Y_Train)
 
-    # Train model, classify images
+
