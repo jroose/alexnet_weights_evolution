@@ -13,11 +13,13 @@ if __name__ == '__main__':
     plot_model(model, to_file="model.png")
 
     for it_epoch in range(30):
-        for X_train, Y_train in data_generator(traindir, 128):
-            acc, mse = model.train_on_batch(X_train, Y_train)
-            print("Epoch Number:", it_epoch, "Accuracy:", acc, "Mean Square Error:", mse)
+        for it_batch, batch in enumerate(data_generator(traindir, 128)):
+            X_train, Y_train = batch
+            is_first_batch = it_batch == 0
+            metrics = model.train_on_batch(X_train, Y_train, reset_metrics = is_first_batch, return_dict = True)
+            #print("Epoch Number:", it_epoch, "Accuracy:", acc, "Mean Square Error:", mse)
 
-
+            print("Epoch Number:", it_epoch, "Metrics:", metrics)
 
 
 
