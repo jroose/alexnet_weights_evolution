@@ -1,7 +1,6 @@
 from alexnet import create_alexnet
 from data import data_generator
 from tensorflow.keras.utils import plot_model
-from tensorflow.keras.callbacks import TensorBoard
 import sys
 import random
 
@@ -15,17 +14,15 @@ if __name__ == '__main__':
     model = create_alexnet()
     plot_model(model, to_file="model.png")
 
-    tb = TensorBoard(log_dir="tf_logs", histogram_freq=0, write_graph=True)
-    tb.set_model(model)
-
     for it_epoch in range(30):
+
         for it_batch, batch in enumerate(data_generator(traindir, 128)):
+
             X_train, Y_train = batch
             is_first_batch = it_batch == 0
             metrics = model.train_on_batch(X_train, Y_train, reset_metrics = is_first_batch, return_dict = True)
             #print("Epoch Number:", it_epoch, "Accuracy:", acc, "Mean Square Error:", mse)
 
             print("Epoch Number:", it_epoch, "Metrics:", metrics)
-
 
 
