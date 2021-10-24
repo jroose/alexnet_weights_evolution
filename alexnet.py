@@ -56,6 +56,9 @@ def create_alexnet():
     X = Dense(4096, activation='relu', kernel_initializer=glorot_uniform())(X)
     X = Dense(1000, activation='softmax', kernel_initializer=glorot_uniform())(X)
 
+    #Dropout layer
+    #X = Dropout(0.5)(X)
+
     X.compile(optimizer = 'adam', loss = CategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
 
     return X
