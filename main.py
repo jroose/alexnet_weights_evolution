@@ -4,6 +4,7 @@ from tensorflow.keras.utils import plot_model
 import sys
 
 if __name__ == '__main__':
+    random.seed(1)
     #getting command line args
     traindir = sys.argv[1]
     validdir = sys.argv[2]

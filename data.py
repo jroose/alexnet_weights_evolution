@@ -1,3 +1,5 @@
+import random
+
 from skimage.io import imread
 import pathlib
 import numpy as np
@@ -9,7 +11,10 @@ def data_generator(image_dir, batch_size):
     batch_labels = []
     label_ids = {}
 
-    for image_path in image_dir.rglob('*.jpg'):
+    image_paths = list(image_dir.rglob('*.jpg'))
+    random.shuffle(image_paths)
+
+    for image_path in image_paths:
         if len(batch) >= batch_size:
             yield (np.stack(batch), np.array(batch_labels, dtype = np.int32))
             batch = []
