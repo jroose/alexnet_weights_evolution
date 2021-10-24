@@ -25,6 +25,7 @@ from tensorflow.keras.losses import CategoricalCrossentropy
 def create_alexnet():
     # input layer: size (224, 224, 3)
     X = Input(shape=(224, 224, 3))
+    inputs = X
 
     # Five convolutional layers and  #two Max pooling layer, parallel:.  Followed by Relu? padding???
 
@@ -49,7 +50,9 @@ def create_alexnet():
     # Fifth CL: 256 kernels of size (3, 3, 192), stride
     X = Conv2D(filters=256, kernel_size=(3, 3), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
     X = Activation('relu')(X)
-    X = MaxPooling2D((3, 3), strides=(2, 2))(X)
+
+    #X = MaxPooling2D((3, 3), strides=(2, 2))(X)
+    X = Flatten()(X)
 
     # Three fully connected layers with 4096 neurons
     X = Dense(4096, activation='relu', kernel_initializer=glorot_uniform())(X)
@@ -58,10 +61,10 @@ def create_alexnet():
 
     #Dropout layer
     #X = Dropout(0.5)(X)
+    model = Model(inputs=inputs, outputs = X, name= "alexnet")
+    model.compile(optimizer = 'adam', loss = CategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
 
-    X.compile(optimizer = 'adam', loss = CategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
-
-    return X
+    return model
 
 
 
