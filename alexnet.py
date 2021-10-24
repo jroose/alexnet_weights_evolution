@@ -20,7 +20,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.initializers import random_uniform, glorot_uniform, constant, identity
-from tensorflow.keras.losses import CategoricalCrossentropy
+from tensorflow.keras.losses import SparseCategoricalCrossentropy
 
 def create_alexnet():
     # input layer: size (224, 224, 3)
@@ -62,7 +62,7 @@ def create_alexnet():
     #Dropout layer
     #X = Dropout(0.5)(X)
     model = Model(inputs=inputs, outputs = X, name= "alexnet")
-    model.compile(optimizer = 'adam', loss = CategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
+    model.compile(optimizer = 'adam', loss = SparseCategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
 
     return model
 

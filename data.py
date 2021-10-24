@@ -11,7 +11,7 @@ def data_generator(image_dir, batch_size):
 
     for image_path in image_dir.rglob('*.jpg'):
         if len(batch) >= batch_size:
-            yield (np.stack(batch), np.arrray(batch_labels, dtype = np.int32))
+            yield (np.stack(batch), np.array(batch_labels, dtype = np.int32))
             batch = []
             batch_labels = []
         label_name = image_path.parent.name
@@ -22,4 +22,4 @@ def data_generator(image_dir, batch_size):
         batch.append(img.astype(np.float32))
         batch_labels.append(label_id)
     if len(batch) > 0:
-        yield (np.stack(batch), np.arrray(batch_labels, dtype=np.int32))
+        yield (np.stack(batch), np.array(batch_labels, dtype=np.int32))
