@@ -2,6 +2,7 @@ from alexnet import create_alexnet
 from data import data_generator
 from tensorflow.keras.utils import plot_model
 import sys
+import random
 
 if __name__ == '__main__':
     random.seed(1)
