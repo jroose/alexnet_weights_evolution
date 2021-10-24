@@ -1,5 +1,5 @@
 from alexnet import create_alexnet
-#from tensorflow.data.Dataset import load
+from tensorflow.data.Dataset import load, from_generator
 
 
 #courtesy of Angel Igareta
