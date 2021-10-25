@@ -12,7 +12,8 @@ if __name__ == '__main__':
 
     model = create_alexnet()
     plot_model(model, to_file="model.png")
-    X_train, Y_train = image_dataset_from_directory(traindir, image_size= (224, 224), seed=10, labels ="inferred", label_mode = "int" )
+    Train_ds = image_dataset_from_directory(traindir, image_size= (224, 224), seed=10, labels ="inferred", label_mode = "int" )
+    print(Train_ds)
     model.fit(X_train, Y_train, epochs= 30)
 
     # for it_epoch in range(30):
