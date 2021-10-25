@@ -13,8 +13,8 @@ if __name__ == '__main__':
     model = create_alexnet()
     plot_model(model, to_file="model.png")
     Train_ds = image_dataset_from_directory(traindir, image_size= (224, 224), seed=10, labels ="inferred", label_mode = "int" )
-    print(Train_ds)
-    model.fit(X_train, Y_train, epochs= 30)
+    #print(Train_ds)
+    model.fit(Train_ds, epochs= 30)
 
     # for it_epoch in range(30):
     #     for it_batch, batch in enumerate(data_generator(traindir, 128)):
