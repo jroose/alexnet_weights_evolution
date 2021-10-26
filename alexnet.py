@@ -52,12 +52,12 @@ def create_alexnet():
     #X = LocalResponseNormalization()(X)
 
     # Forth CL: 384 kernels of size (3, 3, 192), stride
-    X = Conv2D(filters=384, kernel_size=(3, 3), strides=(1, 1), padding='same', kernel_initializer=glorot_normal(), bias_initializer='ones')(X)
+    X = Conv2D(filters=384, kernel_size=(3, 3), strides=(2, 2), padding='same', kernel_initializer=glorot_normal(), bias_initializer='ones')(X)
     X = Activation('relu')(X)
     #X = LocalResponseNormalization()(X)
 
     # Fifth CL: 256 kernels of size (3, 3, 192), stride
-    X = Conv2D(filters=256, kernel_size=(3, 3), strides=(1, 1), padding='same', kernel_initializer=glorot_normal(), bias_initializer='ones')(X)
+    X = Conv2D(filters=256, kernel_size=(3, 3), strides=(2, 2), padding='same', kernel_initializer=glorot_normal(), bias_initializer='ones')(X)
     X = Activation('relu')(X)
     #X = LocalResponseNormalization()(X)
     X = MaxPooling2D((3, 3), strides=(2, 2))(X)
@@ -67,7 +67,7 @@ def create_alexnet():
     # Three fully connected layers with 4096 neurons
     X = Dense(4096, activation='relu', kernel_initializer=glorot_normal(), bias_initializer='ones')(X)
     X = Dense(4096, activation='relu', kernel_initializer=glorot_normal(), bias_initializer='ones')(X)
-    X = Dense(1000, activation='softmax', kernel_initializer=glorot_normal())(X)
+    X = Dense(1000, activation='softmax', kernel_initializer='random_uniform')(X)
 
     #Dropout layer
     #X = Dropout(0.5)(X)
