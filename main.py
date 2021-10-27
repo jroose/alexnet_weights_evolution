@@ -20,10 +20,12 @@ if __name__ == '__main__':
 
     model = create_alexnet()
     plot_model(model, to_file="model.png")
-    Train_ds = image_dataset_from_directory(traindir, image_size= (227, 227), seed=10, labels ="inferred", label_mode = "int" )
+   # Train_ds = image_dataset_from_directory(traindir, image_size= (227, 227), seed=10, labels ="inferred", label_mode = "int" , validation_split=0.2, subset='training')
+   # Valid_ds = image_dataset_from_directory(traindir, image_size= (227, 227), seed=10, labels ="inferred", label_mode = "int" , validation_split=0.2, subset='validation')
     #Valid_ds = image_dataset_from_directory(validdir, image_size= (227, 227), seed=10, labels ="inferred", label_mode = "int" )
-    train_datagen = ImageDataGenerator(
-        rescale=1.0 / 255.0,
+    train_datagen = ImageDataGenerator( 
+    	featurewise_center = True,
+        featurewise_std_normalization = True
     )
 
     Train_ds = train_datagen.flow_from_directory(
@@ -33,13 +35,13 @@ if __name__ == '__main__':
         batch_size=BATCH_SIZE,
         seed=1,
         shuffle=True,
-        class_mode="sparse"
+        class_mode="sparse",
     )
 
     #print(Train_ds)
     log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M")
     tb = TensorBoard(log_dir=str(log_dir), histogram_freq=1)
-    #model.fit(Train_ds, validation_data=Valid_ds, epochs= 30, callbacks=[tb], batch_size=128)
+    #model.fit(Train_ds, validation_data=Valid_ds, epochs= 30, callbacks=[tb])
     model.fit(Train_ds, epochs= 30, callbacks=[tb])
 
     # for it_epoch in range(30):
