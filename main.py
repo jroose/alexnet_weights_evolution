@@ -15,7 +15,7 @@ if __name__ == '__main__':
     validdir = sys.argv[2]
     testdir = sys.argv[3]
 
-    BATCH_SIZE = 64
+    BATCH_SIZE = 256
     image_width = 227
     image_height = 227
 
