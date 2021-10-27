@@ -2,6 +2,7 @@
 from alexnet import create_alexnet
 from tensorflow.keras.utils import plot_model, image_dataset_from_directory
 from tensorflow.keras.callbacks import TensorBoard
+from tensorflow.keras.preprocessing.image import random_rotation
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import sys
 import random

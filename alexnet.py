@@ -15,9 +15,8 @@ import numpy as np
 import tensorflow as tf
 import tensorflow.keras.layers as tfl
 from  tensorflow.keras.optimizers import Adagrad, Adam
-
-from tensorflow.keras import layers
-from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D
+from tensorflow.keras.
+from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D, Dropout, RandomFlip, RandomRotation
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.initializers import he_normal, glorot_uniform, constant, identity
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
@@ -61,14 +60,15 @@ def create_alexnet():
     X = MaxPooling2D((3, 3), strides=(2, 2))(X)
     X = Flatten()(X)
 
-    # Three fully connected layers with 4096 neurons
+    # Three fully connected layers, first two with 4096 neurons and Dropout
     #X = BatchNormalization()(X)
     X = Dense(4096, activation='relu', kernel_initializer=he_normal(), bias_initializer='ones')(X)
+    X = Dropout(0.5)(X)
     X = Dense(4096, activation='relu', kernel_initializer=he_normal(), bias_initializer='ones')(X)
+    X = Dropout(0.5)(X)
     X = Dense(1000, activation='softmax', kernel_initializer=he_normal())(X)
 
-    #Dropout layer
-    #X = Dropout(0.5)(X)
+
     model = Model(inputs=inputs, outputs = X, name= "alexnet")
     model.compile(optimizer = Adam(learning_rate=1e-4), loss = SparseCategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
 
