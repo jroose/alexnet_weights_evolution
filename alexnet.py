@@ -14,7 +14,7 @@
 import numpy as np
 import tensorflow as tf
 import tensorflow.keras.layers as tfl
-from  tensorflow.keras.optimizers import Adagrad
+from  tensorflow.keras.optimizers import Adagrad, Adam
 
 from tensorflow.keras import layers
 from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D
@@ -70,7 +70,7 @@ def create_alexnet():
     #Dropout layer
     #X = Dropout(0.5)(X)
     model = Model(inputs=inputs, outputs = X, name= "alexnet")
-    model.compile(optimizer = 'adam', loss = SparseCategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
+    model.compile(optimizer = Adam(learning_rate=1e-4), loss = SparseCategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
 
     return model
 
