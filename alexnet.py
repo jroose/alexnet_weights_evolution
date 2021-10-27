@@ -19,49 +19,47 @@ from  tensorflow.keras.optimizers import Adagrad
 from tensorflow.keras import layers
 from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D
 from tensorflow.keras.models import Model, load_model
-from tensorflow.keras.initializers import random_uniform, glorot_uniform, constant, identity
+from tensorflow.keras.initializers import he_normal, glorot_uniform, constant, identity
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
 
 def create_alexnet():
     # input layer: size (224, 224, 3)
-    X = Input(shape=(224, 224, 3))
+    X = Input(shape=(227, 227, 3))
     inputs = X
 
-    X = BatchNormalization()(X)
     # Five convolutional layers and  #two Max pooling layer, parallel:.  Followed by Relu? padding???
 
     # First CL: 96 kernels of size (11, 11, 3), stride 4
-    X = BatchNormalization()(X)
-    X = Conv2D(filters=96, kernel_size=(11, 11), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    X = Conv2D(filters=96, kernel_size=(11, 11), strides=(4, 4), padding='valid', kernel_initializer=he_normal())(X)
     X = Activation('relu')(X)
     X = MaxPooling2D((3, 3), strides=(2, 2))(X)
 
     # Second CL: 256 kernels of size (5, 5, 48), stride
-    X = BatchNormalization()(X)
-    X = Conv2D(filters=256, kernel_size=(5, 5), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    #X = BatchNormalization()(X)
+    X = Conv2D(filters=256, kernel_size=(5, 5), strides=(1, 1), padding='same', kernel_initializer=he_normal())(X)
     X = Activation('relu')(X)
     X = MaxPooling2D((3, 3), strides=(2, 2))(X)
 
     # Third CL: 384 kernels of size (3, 3, 256), stride
-    X = BatchNormalization()(X)
-    X = Conv2D(filters=384, kernel_size=(3, 3), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    #X = BatchNormalization()(X)
+    X = Conv2D(filters=384, kernel_size=(3, 3), strides=(1, 1), padding='same', kernel_initializer=he_normal())(X)
     X = Activation('relu')(X)
 
     # Forth CL: 384 kernels of size (3, 3, 192), stride
-    X = BatchNormalization()(X)
-    X = Conv2D(filters=384, kernel_size=(3, 3), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    #X = BatchNormalization()(X)
+    X = Conv2D(filters=384, kernel_size=(3, 3), strides=(1, 1), padding='same', kernel_initializer=he_normal())(X)
     X = Activation('relu')(X)
 
     # Fifth CL: 256 kernels of size (3, 3, 192), stride
-    X = BatchNormalization()(X)
-    X = Conv2D(filters=256, kernel_size=(3, 3), strides=(4, 4), padding='same', kernel_initializer=random_uniform())(X)
+    #X = BatchNormalization()(X)
+    X = Conv2D(filters=256, kernel_size=(3, 3), strides=(1, 1), padding='same', kernel_initializer=he_normal())(X)
     X = Activation('relu')(X)
 
-    #X = MaxPooling2D((3, 3), strides=(2, 2))(X)
+    X = MaxPooling2D((3, 3), strides=(2, 2))(X)
     X = Flatten()(X)
 
     # Three fully connected layers with 4096 neurons
-    X = BatchNormalization()(X)
+    #X = BatchNormalization()(X)
     X = Dense(4096, activation='relu', kernel_initializer=glorot_uniform())(X)
     X = Dense(4096, activation='relu', kernel_initializer=glorot_uniform())(X)
     X = Dense(1000, activation='softmax', kernel_initializer=glorot_uniform())(X)
