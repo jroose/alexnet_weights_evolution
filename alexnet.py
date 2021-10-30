@@ -16,7 +16,7 @@ import tensorflow as tf
 import tensorflow.keras.layers as tfl
 from  tensorflow.keras.optimizers import Adagrad, Adam
 #from tensorflow.keras.
-from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D, Dropout, RandomFlip, RandomRotation
+from tensorflow.keras.layers import Input, Add, Dense, Activation, ZeroPadding2D, BatchNormalization, Flatten, Conv2D, AveragePooling2D, MaxPooling2D, GlobalMaxPooling2D, Dropout, RandomFlip, RandomRotation, RandomZoom
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.initializers import he_normal, glorot_uniform, constant, identity
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
@@ -26,6 +26,11 @@ def create_alexnet():
     X = Input(shape=(227, 227, 3))
     
     inputs = X
+
+    #data augmentation, random flips and random rotation
+    X = RandomFlip()(X)
+    X = RandomRotation([0,1])(X)
+    X = RandomZoom((-0.1, 0.1))(X)
 
     # Five convolutional layers and  #two Max pooling layer, parallel:.  Followed by Relu? padding???
 
