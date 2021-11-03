@@ -42,7 +42,7 @@ if __name__ == '__main__':
     #print(Train_ds)
     log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M")
     tb = TensorBoard(log_dir=str(log_dir), histogram_freq=1)
-    model.fit(Train_ds, validation_data=Valid_ds, epochs = 30, callbacks=[tb])
+    model.fit(Train_ds.prefetch(), validation_data=Valid_ds.prefetch(), epochs = 30, callbacks=[tb])
     # epochs = 300, but try 30 to train faster
 
     # for it_epoch in range(30):
