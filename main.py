@@ -15,7 +15,7 @@ if __name__ == '__main__':
     validdir = sys.argv[2]
     testdir = sys.argv[3]
 
-    BATCH_SIZE = 256
+    BATCH_SIZE = 32 #baseline BATCH_SIZE is 256, try smaller sizes 32, 64
     image_width = 227
     image_height = 227
 
@@ -42,7 +42,8 @@ if __name__ == '__main__':
     #print(Train_ds)
     log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M")
     tb = TensorBoard(log_dir=str(log_dir), histogram_freq=1)
-    model.fit(Train_ds, validation_data=Valid_ds, epochs = 300, callbacks=[tb])
+    model.fit(Train_ds, validation_data=Valid_ds, epochs = 30, callbacks=[tb])
+    # epochs = 300, but try 30 to train faster
 
     # for it_epoch in range(30):
     #     for it_batch, batch in enumerate(data_generator(traindir, 128)):

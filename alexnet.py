@@ -75,8 +75,8 @@ def create_alexnet():
 
 
     model = Model(inputs=inputs, outputs = X, name= "alexnet")
-    model.compile(optimizer = Adam(learning_rate=1e-4), loss = SparseCategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
-
+    model.compile(optimizer = Adagrad(learning_rate=1e-4), loss = SparseCategoricalCrossentropy(), metrics = ['accuracy', 'mse'])
+    #We try optimizers Adam and Adagrad with intial lr 1e-4,
     return model
 
 
