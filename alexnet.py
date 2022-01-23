@@ -32,6 +32,7 @@ def create_alexnet():
     X = RandomRotation([0,1])(X)
     X = RandomZoom((-0.1, 0.1))(X)
 
+
     # Five convolutional layers and  #two Max pooling layer, parallel:.  Followed by Relu? padding???
 
     # First CL: 96 kernels of size (11, 11, 3), stride 4
@@ -70,7 +71,6 @@ def create_alexnet():
     X = Dense(4096, activation='relu', kernel_initializer=he_normal(), bias_initializer='ones')(X)
     X = Dropout(0.5)(X)
     X = Dense(4096, activation='relu', kernel_initializer=he_normal(), bias_initializer='ones')(X)
-    X = Dropout(0.5)(X)
     X = Dense(1000, activation='softmax', kernel_initializer=he_normal())(X)
 
 
