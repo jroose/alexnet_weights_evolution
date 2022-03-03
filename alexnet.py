@@ -28,9 +28,9 @@ def create_alexnet():
     inputs = X
 
     #data augmentation, random flips and random rotation
-    X = RandomFlip()(X)
-    X = RandomRotation([0,1])(X)
-    X = RandomZoom((-0.1, 0.1))(X)
+    X = RandomFlip(mode="horizontal")(X)
+    X = RandomRotation([-0.1, 0.1])(X)
+    X = RandomZoom(-0.1, -0.1)(X)
 
 
     # Five convolutional layers and  #two Max pooling layer, parallel:.  Followed by Relu? padding???
