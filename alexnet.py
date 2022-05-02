@@ -29,11 +29,11 @@ def create_alexnet():
     
     inputs = X
     LRN = lambda: Lambda(lambda x: local_response_normalization(x, bias=2, alpha=1e-4, beta=0.75, depth_radius=2))
-    regularizer = L2(l2=0.0005)
+    regularizer = L2(l2=0.00005)
 
     #data augmentation, random flips and random rotation
     X = RandomFlip(mode="horizontal")(X)
-    X = RandomRotation([-0.1, 0.1])(X)
+    X = RandomRotation([-0.15, 0.15])(X)
     X = RandomZoom(-0.1, -0.1)(X)
 
 
